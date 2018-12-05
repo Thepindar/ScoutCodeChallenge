@@ -1,0 +1,60 @@
+﻿@model Scout.Models.BinViewModel
+
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Edit Bin</title>
+</head>
+<body>
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/jqueryval")
+
+
+	@using (Html.BeginForm("EditBins", "Bins", FormMethod.Post))
+	{
+		@Html.AntiForgeryToken()
+
+		<div class="form-horizontal">
+			<h4>Edit Bin</h4>
+			<hr />
+			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+			<br />
+			<div class="form-group">
+				<div class="col-md-10">
+					@Html.HiddenFor(model => model.BinID, new { htmlAttributes = new { @class = "form-control" } })
+				</div>
+			</div>
+			<div class="form-group">
+				@Html.LabelFor(model => model.BinName, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+					@Html.EditorFor(model => model.BinName, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.BinName, "", new { @class = "text-danger" })
+				</div>
+			</div>
+
+			<br />
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-10">
+					<input type="submit" value="Save" class="btn btn-default" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-10" style="color:green">
+					@ViewBag.Message
+				</div>
+			</div>
+		</div>
+	}
+
+	<br /><br />
+	<div>
+		@Html.ActionLink("Back to Bins", "Bins", "Home")
+	</div>
+</body>
+</html>

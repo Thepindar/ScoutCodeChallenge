@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Scout.Models.CustomerOrderViewModel>
+@{
+	ViewBag.Title = "Orders";
+}
+@section Scripts{
+	<script type="text/javascript">
+		function DeleteOrders(id) {
+			var result = confirm("Are you sure you want to delete Order ID " + id + "?");
+			if (result == true) {
+				var URL = "/Orders/DeleteOrders/" + id;
+				$.get(URL, function (data) {
+					//$("#Orders").html(data); I believe something like this should automatically refresh the page.
+					alert("Please refresh the page to see the updates.");
+				});
+			}
+			else {
+				alert("Ok, never mind then.");
+			}
+		}
+	</script>
+}
+<h2>Orders</h2>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">Order Number</th>
+			<th scope="col">Date Ordered</th>
+			<th scope="col">Product Desc</th>
+			<th scope="col">Quantity</th>
+			<th scope="col">Customer Name</th>
+			<th scope="col">Customer Address</th>
+		</tr>
+	</thead>
+	@foreach (var item in Model)
+	{
+		var ID = item.OrderID;
+
+		<tbody>
+			<tr>
+				<td>@Html.ActionLink(item.OrderID.ToString(), "/EditOrders", "Orders", new { @id = item.OrderID.ToString() }, null)</td>
+				<td>@item.DateOrdered</td>
+				<td>@item.ProductDesc</td>
+				<td>@item.QTY</td>
+				<td>@item.CustomerName</td>
+				<td>@item.CustomerAddress</td>
+				<td><button id="DeleteOrders" runat="server" onclick="DeleteOrders(@ID);">Delete</button></td>
+
+			</tr>
+		</tbody>
+	}
+</table>
+
+
+<div>
+	@Html.ActionLink("New Orders", "AddOrders", "Orders")
+</div>

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ScoutModelStoreContainer" CdmEntityContainer="ScoutEntities">
+    <EntitySetMapping Name="Bins">
+      <EntityTypeMapping TypeName="ScoutModel.Bin">
+        <MappingFragment StoreEntitySet="Bins">
+          <ScalarProperty Name="BinID" ColumnName="BinID" />
+          <ScalarProperty Name="BinName" ColumnName="BinName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerOrders">
+      <EntityTypeMapping TypeName="ScoutModel.CustomerOrder">
+        <MappingFragment StoreEntitySet="CustomerOrders">
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="DateOrdered" ColumnName="DateOrdered" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Inventories">
+      <EntityTypeMapping TypeName="ScoutModel.Inventory">
+        <MappingFragment StoreEntitySet="Inventory">
+          <ScalarProperty Name="InventoryID" ColumnName="InventoryID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="BinID" ColumnName="BinID" />
+          <ScalarProperty Name="QTY" ColumnName="QTY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderLines">
+      <EntityTypeMapping TypeName="ScoutModel.OrderLine">
+        <MappingFragment StoreEntitySet="OrderLines">
+          <ScalarProperty Name="OrderLineID" ColumnName="OrderLineID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="QTY" ColumnName="QTY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="ScoutModel.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="SKU" ColumnName="SKU" />
+          <ScalarProperty Name="ProductDesc" ColumnName="ProductDesc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionName="ScoutModel.Store.fnc_List2Table" FunctionImportName="fnc_List2Table">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ScoutModel.fnc_List2Table_Result">
+          <ScalarProperty Name="ListIndex" ColumnName="ListIndex" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_InsUpd_Bins" FunctionName="ScoutModel.Store.usp_InsUpd_Bins" />
+    <FunctionImportMapping FunctionImportName="usp_View_Bins" FunctionName="ScoutModel.Store.usp_View_Bins">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ScoutModel.usp_View_Bins_Result">
+          <ScalarProperty Name="BinID" ColumnName="BinID" />
+          <ScalarProperty Name="BinName" ColumnName="BinName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_View_Inventory" FunctionName="ScoutModel.Store.usp_View_Inventory">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ScoutModel.usp_View_Inventory_Result">
+          <ScalarProperty Name="ProductDesc" ColumnName="ProductDesc" />
+          <ScalarProperty Name="BinName" ColumnName="BinName" />
+          <ScalarProperty Name="QTY" ColumnName="QTY" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_View_Orders" FunctionName="ScoutModel.Store.usp_View_Orders">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ScoutModel.usp_View_Orders_Result">
+          <ScalarProperty Name="DateOrdered" ColumnName="DateOrdered" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

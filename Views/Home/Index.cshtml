@@ -1,0 +1,27 @@
+﻿<div class="jumbotron">
+    <h1>Inventory Management</h1>
+    <p class="lead">This is an Inventory Management application that will allow warehouse staff to view, create, edit and delete: Products, Bins, Inventory Levels, and Orders.</p>
+    <p>Assumptions: Only warehouse staff has access to this application. e.g. no login page is required.</p>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Products</h2>
+        <p>Information about the product</p>
+        @Html.ActionLink("Go", "Product")
+    </div>
+    <div class="col-md-4">
+        <h2>Bins</h2>
+        <p>Information about the bin</p>
+		@Html.ActionLink("Go", "Bins")
+    </div>
+    <div class="col-md-4">
+        <h2>Inventory Levels</h2>
+        <p>Information about the Inventory Levels</p>
+		<p>@Html.ActionLink("Go", "Inventory")</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Orders</h2>
+        <p>Information about the Orders</p>
+		<p>@Html.ActionLink("Go", "Orders")</p>
+    </div>
+</div>

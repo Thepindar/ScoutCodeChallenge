@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ScoutModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bins">
+    <Key>
+      <PropertyRef Name="BinID" />
+    </Key>
+    <Property Name="BinID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BinName" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CustomerOrders">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DateOrdered" Type="datetime" Nullable="false" />
+    <Property Name="CustomerName" Type="varchar(max)" Nullable="false" />
+    <Property Name="CustomerAddress" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Inventory">
+    <Key>
+      <PropertyRef Name="InventoryID" />
+    </Key>
+    <Property Name="InventoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="BinID" Type="int" Nullable="false" />
+    <Property Name="QTY" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderLines">
+    <Key>
+      <PropertyRef Name="OrderLineID" />
+    </Key>
+    <Property Name="OrderLineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderID" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="QTY" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SKU" Type="varchar(max)" Nullable="false" />
+    <Property Name="ProductDesc" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Inventory__BinID__4BAC3F29">
+    <End Role="Bins" Type="Self.Bins" Multiplicity="1" />
+    <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bins">
+        <PropertyRef Name="BinID" />
+      </Principal>
+      <Dependent Role="Inventory">
+        <PropertyRef Name="BinID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Inventory__Produ__4AB81AF0">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Inventory">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderLine__Order__46E78A0C">
+    <End Role="CustomerOrders" Type="Self.CustomerOrders" Multiplicity="1" />
+    <End Role="OrderLines" Type="Self.OrderLines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerOrders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderLines">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderLine__Produ__47DBAE45">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="OrderLines" Type="Self.OrderLines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="OrderLines">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fnc_List2Table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="List" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Delim" Type="char" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="ListIndex" Type="int" />
+          <Property Name="Value" Type="varchar(max)" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="usp_InsUpd_Bins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BinName" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="usp_View_Bins" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BinsList" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="usp_View_Inventory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ProductList" Type="varchar(max)" Mode="In" />
+    <Parameter Name="BinsList" Type="varchar(max)" Mode="In" />
+  </Function>
+  <Function Name="usp_View_Orders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="OrderList" Type="varchar(max)" Mode="In" />
+  </Function>
+  <EntityContainer Name="ScoutModelStoreContainer">
+    <EntitySet Name="Bins" EntityType="Self.Bins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerOrders" EntityType="Self.CustomerOrders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderLines" EntityType="Self.OrderLines" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Inventory__BinID__4BAC3F29" Association="Self.FK__Inventory__BinID__4BAC3F29">
+      <End Role="Bins" EntitySet="Bins" />
+      <End Role="Inventory" EntitySet="Inventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Inventory__Produ__4AB81AF0" Association="Self.FK__Inventory__Produ__4AB81AF0">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Inventory" EntitySet="Inventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderLine__Order__46E78A0C" Association="Self.FK__OrderLine__Order__46E78A0C">
+      <End Role="CustomerOrders" EntitySet="CustomerOrders" />
+      <End Role="OrderLines" EntitySet="OrderLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderLine__Produ__47DBAE45" Association="Self.FK__OrderLine__Produ__47DBAE45">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="OrderLines" EntitySet="OrderLines" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

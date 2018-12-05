@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Scout.Models.BinViewModel>
+@{
+	ViewBag.Title = "Bins";
+}
+
+
+@section Scripts{
+	<script type="text/javascript">
+		function DeleteBins(id, name) {
+			var result = confirm("Are you sure you want to delete Bin ID " + id + ": '" + name + "'?");
+			if (result == true) {
+				var URL = "/Bins/DeleteBins/" + id;
+				$.get(URL, function (data) {
+					//$("#Bins").html(data); I believe something like this should automatically refresh the page.
+					alert("Please refresh the page to see the updates.");
+				});
+			}
+			else {
+				alert("Ok, never mind then.");
+			}
+		}
+	</script>
+}
+
+<h2>Bins</h2>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">Bin ID</th>
+			<th scope="col">Bin Name</th>
+		</tr>
+	</thead>
+	@foreach (var item in Model)
+	{
+		var ID = item.BinID;
+		var Name = item.BinName;
+
+		<tbody>
+			<tr>
+				<td>@Html.ActionLink(item.BinID.ToString(), "/EditBins", "Bins", new { @id = item.BinID.ToString() }, null)</td>
+				<td>@item.BinName</td>
+				<td><button id="DeleteBin" runat="server" onclick="DeleteBins(@ID, '@Name');">Delete</button></td>
+				
+			</tr>
+		</tbody>
+	}
+</table>
+
+<div>
+	@Html.ActionLink("New Bin", "AddBin", "Bins")
+</div>

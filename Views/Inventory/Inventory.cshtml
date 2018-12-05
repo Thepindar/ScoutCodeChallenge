@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Scout.Models.InventoryViewModel>
+@{
+	ViewBag.Title = "Inventory"; 
+}
+
+@section Scripts{
+	<script type="text/javascript">
+		function DeleteInventory(id, prod, bin) {
+			var result = confirm("Are you sure you want to delete Inventory ID " + id + " with product '" + prod + "' and bin '" + bin + "'?");
+			if (result == true) {
+				var URL = "/Inventory/DeleteInventory/" + id;
+				$.get(URL, function (data) {
+					//$("#Inventory").html(data); I believe something like this should automatically refresh the page.
+					alert("Please refresh the page to see the updates.");
+				});
+			}
+			else {
+				alert("Ok, never mind then.");
+			}
+		}
+	</script>
+}
+<h2>Inventory</h2>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">Inventory ID</th>
+			<th scope="col">Product Desc</th>
+			<th scope="col">Bin Name</th>
+			<th scope="col">Quantity</th>
+		</tr>
+	</thead>
+	@foreach (var item in Model)
+	{
+		var ID = item.InventoryID;
+		var Prod = item.ProductDesc;
+		var Bin = item.BinName;
+
+		<tbody>
+			<tr>
+				<td>@Html.ActionLink(item.InventoryID.ToString(), "/EditInventory", "Inventory", new { @id = item.InventoryID.ToString() }, null)</td>
+				<td>@item.ProductDesc</td>
+				<td>@item.BinName</td>
+				<td>@item.QTY</td>
+				<td><button id="DeleteInventory" runat="server" onclick="DeleteInventory(@ID, '@Prod', '@Bin');">Delete</button></td>
+
+			</tr>
+		</tbody>
+	}
+</table>
+
+<div>
+	@Html.ActionLink("New Inventory", "AddInventory", "Inventory")
+</div>

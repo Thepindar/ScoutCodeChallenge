@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Scout.Models.ProductViewModel>
+@{
+	ViewBag.Title = "Products";
+}
+
+@section Scripts{
+	<script type="text/javascript">
+		function DeleteProduct(id, name) {
+			var result = confirm("Are you sure you want to delete Product ID " + id + ": '" + name + "'?");
+			if (result == true) {
+				var URL = "/Product/DeleteProduct/" + id;
+				$.get(URL, function (data) {
+					//$("#Product").html(data); I believe something like this should automatically refresh the page.
+					alert("Please refresh the page to see the updates.");
+				});
+			}
+			else {
+				alert("Ok, never mind then.");
+			}
+		}
+	</script>
+}
+
+<h2>Products</h2>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">Product ID</th>
+			<th scope="col">SKU</th>
+			<th scope="col">Product Description</th>
+		</tr>
+	</thead>
+	@foreach (var item in Model)
+	{
+		var ID = item.ProductID;
+		var Name = item.SKU;
+
+		<tbody>
+			<tr>
+				<td>@Html.ActionLink(item.ProductID.ToString(), "/EditProduct", "Product", new { @id = item.ProductID.ToString() }, null)</td>
+				<td>@item.SKU</td>
+				<td>@item.ProductDesc</td>
+				<td><button id="DeleteProduct" runat="server" onclick="DeleteProduct(@ID, '@Name');">Delete</button></td>
+
+			</tr>
+		</tbody>
+	}
+</table>
+
+<div>
+	@Html.ActionLink("New Product", "AddProduct", "Product")
+</div>
